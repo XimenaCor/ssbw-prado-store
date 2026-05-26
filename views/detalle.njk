@@ -29,6 +29,36 @@
                     {{ card.descripcion }}
                 </p>
 
+                <form
+    action="/al-carrito/{{ card.id }}"
+    method="POST"
+>
+
+    <div class="mb-3">
+
+        <label class="form-label">
+            Cantidad
+        </label>
+
+        <input
+            type="number"
+            name="cantidad"
+            value="1"
+            min="1"
+            class="form-control"
+        >
+
+    </div>
+
+    <button
+        class="btn btn-dark"
+        type="submit"
+    >
+        Añadir al carrito
+    </button>
+
+</form>
+
             </div>
 
         </div>
