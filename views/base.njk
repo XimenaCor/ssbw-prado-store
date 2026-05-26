@@ -47,11 +47,18 @@
 
         <div class="d-flex align-items-center gap-3">
 
-            <span class="text-white">
+            <button
+                class="btn btn-outline-light"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#carritoCanvas"
+            >
+                <span id="contadorCarrito">
 
-                🛒 {{ total_carrito }}
+                    🛒 {{ total_carrito }}
 
-            </span>
+                </span>
+            </button>
 
             {% if usuario %}
 
@@ -91,5 +98,175 @@
 
 </div>
 
+<div
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="carritoCanvas"
+>
+
+    <div class="offcanvas-header">
+
+        <h5 class="offcanvas-title">
+            Carrito
+        </h5>
+
+        <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+        ></button>
+
+    </div>
+
+    <div class="offcanvas-body">
+
+        <div id="listaCarrito"></div>
+
+    </div>
+
+</div>
+
+<template id="productoTemplate">
+
+    <div class="card mb-3">
+
+        <div class="card-body">
+
+            <h5 class="card-title productoTitulo"></h5>
+
+            <p class="productoCantidad"></p>
+
+            <div class="d-flex gap-2 align-items-center">
+
+                <button class="btn btn-danger btnRestar">
+                    -
+                </button>
+
+                <button class="btn btn-success btnSumar">
+                    +
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</template>
+
+<script>
+
+async function cargarCarrito() {
+
+    const response =
+        await fetch("/api/carrito")
+
+    const productos =
+        await response.json()
+
+    const lista =
+        document.getElementById(
+            "listaCarrito"
+        )
+
+    lista.innerHTML = ""
+
+    const template =
+        document.getElementById(
+            "productoTemplate"
+        )
+
+    for (const producto of productos) {
+
+        let total = 0
+        const clone =
+            template.content.cloneNode(true)
+
+        clone.querySelector(
+            ".productoTitulo"
+        ).textContent =
+            producto.titulo
+
+        clone.querySelector(
+            ".productoCantidad"
+        ).textContent =
+            `Cantidad: ${producto.cantidad}`
+
+        total += producto.cantidad
+
+        // botón sumar
+    clone.querySelector(
+        ".btnSumar"
+    ).addEventListener(
+        "click",
+        async () => {
+
+        await fetch(
+
+            `/al-carrito/${producto.id}`,
+
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    cantidad: 1
+                })
+
+            }
+
+        )
+
+        cargarCarrito()
+
+    }
+)
+
+        // botón restar
+        clone.querySelector(
+            ".btnRestar"
+        ).addEventListener(
+            "click",
+            async () => {
+            
+                await fetch(
+                
+                    `/api/carrito/${producto.id}`,
+
+                    {
+                        method: "DELETE"
+                    }
+
+                )
+
+                cargarCarrito()
+
+            }
+        )
+
+        lista.appendChild(clone)
+
+    }
+    document.getElementById(
+        "contadorCarrito"
+    ).textContent =
+        `🛒 ${total}`
+
+}
+
+document
+    .getElementById("carritoCanvas")
+    .addEventListener(
+        "show.bs.offcanvas",
+        cargarCarrito
+    )
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

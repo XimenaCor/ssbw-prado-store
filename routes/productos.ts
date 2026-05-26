@@ -97,10 +97,24 @@ router.post("/al-carrito/:id", async (req: any, res) => {
 
         if (req.session.carrito !== undefined) {
 
-            req.session.carrito.push({
-                id,
-                cantidad
-            })
+            const existente =
+                req.session.carrito.find(
+                    (item: any) =>
+                        item.id === id
+                )
+
+            if (existente) {
+
+                existente.cantidad += cantidad
+
+            } else {
+
+                req.session.carrito.push({
+                    id,
+                    cantidad
+                })
+
+            }
 
         } else {
 
@@ -126,5 +140,119 @@ router.post("/al-carrito/:id", async (req: any, res) => {
     res.redirect(`/producto/${id}`)
 
 })
+
+// API carrito
+router.get("/api/carrito", async (req: any, res) => {
+
+    try {
+
+        const carrito =
+            req.session.carrito || []
+
+        const productos = []
+
+        for (const item of carrito) {
+
+            const producto =
+                await prisma.producto.findUnique({
+
+                    where: {
+                        id: item.id
+                    }
+
+                })
+
+            if (producto) {
+
+                productos.push({
+
+                    ...producto,
+
+                    cantidad: item.cantidad
+
+                })
+
+            }
+
+        }
+
+        res.json(productos)
+
+    } catch (error: any) {
+
+        res.status(500).json({
+
+            error: error.message
+
+        })
+
+    }
+
+})
+
+// eliminar del carrito
+router.delete(
+    "/api/carrito/:id",
+    async (req: any, res) => {
+
+        try {
+
+            const id =
+                Number(req.params.id)
+
+            const carrito =
+                req.session.carrito || []
+
+            const producto =
+                carrito.find(
+                    (item: any) =>
+                        item.id === id
+                )
+
+            if (producto) {
+
+                if (producto.cantidad > 1) {
+
+                    producto.cantidad--
+
+                } else {
+
+                    req.session.carrito =
+                        carrito.filter(
+                            (item: any) =>
+                                item.id !== id
+                        )
+
+                }
+
+            }
+
+            req.session.total_carrito =
+                req.session.carrito.reduce(
+
+                    (
+                        total: number,
+                        item: any
+                    ) => total + item.cantidad,
+
+                    0
+                )
+
+            res.json({
+                success: true
+            })
+
+        } catch (error: any) {
+
+            res.status(500).json({
+
+                error: error.message
+
+            })
+
+        }
+
+    }
+)
 
 export default router
