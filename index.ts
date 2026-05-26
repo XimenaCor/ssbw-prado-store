@@ -4,6 +4,7 @@ import logger from "./logger.ts"
 import session from "express-session"
 import cookieParser from "cookie-parser"
 import jwt from "jsonwebtoken"
+import ApiRouter from "./routes/api.ts"
 import UsuariosRouter from "./routes/usuarios.ts"
 import ProductosRouter from "./routes/productos.ts"
 
@@ -15,6 +16,8 @@ app.use(cookieParser())
 app.use(express.urlencoded({
     extended: true
 }))
+
+app.use(express.json())
 
 // Middleware sesiones
 app.use(session({
@@ -105,6 +108,8 @@ app.use((req: any, res, next) => {
 app.use("/", ProductosRouter)
 
 app.use("/", UsuariosRouter)
+
+app.use("/api", ApiRouter)
 
 logger.info("Servidor iniciando...")
 

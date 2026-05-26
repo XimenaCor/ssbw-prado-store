@@ -1,0 +1,37 @@
+GET http://localhost:3000/api/productos
+
+###
+
+GET http://localhost:3000/api/productos/1
+
+###
+
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+    "titulo": "Nuevo Libro",
+    "descripcion": "Libro creado desde API",
+    "precio": 19.99,
+    "imagen": "test.jpg"
+}
+
+###
+
+PUT http://localhost:3000/api/productos/1
+Content-Type: application/json
+
+{
+    "titulo": "Libro actualizado"
+}
+
+###
+
+DELETE http://localhost:3000/api/productos/21
+
+###
+
+GET http://localhost:3000/api/productos?desde=0&hasta=5
+
+###
+GET http://localhost:3000/api/productos?orden=desc
