@@ -1,0 +1,72 @@
+{% extends "base.njk" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-md-4">
+
+        <div class="card p-4">
+
+            <h2 class="mb-4">
+                Login
+            </h2>
+
+            {% if error %}
+
+            <div class="alert alert-danger">
+
+                Credenciales incorrectas
+
+            </div>
+
+            {% endif %}
+
+            <form action="/login" method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Contraseña
+                    </label>
+
+                    <input
+                        type="password"
+                        name="contrasena"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    class="btn btn-dark w-100"
+                    type="submit"
+                >
+                    Iniciar sesión
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
