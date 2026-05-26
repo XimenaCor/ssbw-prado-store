@@ -1,0 +1,40 @@
+{% extends "base.njk" %}
+
+{% block content %}
+
+<div class="card">
+
+    <div class="row g-0">
+
+        <div class="col-md-4">
+
+            <img
+                src="https://books.toscrape.com/{{ card.imagen }}"
+                class="img-fluid"
+            >
+
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="card-body">
+
+                <h1>{{ card.titulo }}</h1>
+
+                <p class="fs-4">
+                    {{ card.precio }}
+                </p>
+
+                <p>
+                    {{ card.descripcion }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

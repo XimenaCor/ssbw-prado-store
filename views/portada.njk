@@ -1,0 +1,57 @@
+{% extends "base.njk" %}
+
+{% block content %}
+
+<h1 class="mb-4">Productos</h1>
+
+{% if cards.length == 0 %}
+
+<div class="alert alert-warning">
+
+    No se encontraron productos.
+
+</div>
+
+{% endif %}
+
+<div class="row">
+
+{% for card in cards %}
+
+<div class="col-md-3 mb-4">
+
+    <div class="card h-100">
+
+        <img
+            src="https://books.toscrape.com/{{ card.imagen }}"
+            class="card-img-top"
+        >
+
+        <div class="card-body">
+
+            <h5 class="card-title">
+                {{ card.titulo }}
+            </h5>
+
+            <p class="card-text">
+                {{ card.precio }}
+            </p>
+
+            <a
+                href="/producto/{{ card.id }}"
+                class="btn btn-dark"
+            >
+                Ver detalle
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
