@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: ssbw-postgres
+
+    environment:
+      POSTGRES_USER: yo
+      POSTGRES_PASSWORD: una_clave_muy_segura_123
+      POSTGRES_DB: ssbw
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
