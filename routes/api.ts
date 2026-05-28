@@ -161,4 +161,41 @@ router.delete("/productos/:id", async (req, res) => {
 
 })
 
+// imagen random
+router.get(
+    "/random-image",
+    async (req, res) => {
+
+        try {
+
+            const total =
+                await prisma.producto.count()
+
+            const random =
+                Math.floor(
+                    Math.random() * total
+                )
+
+            const producto =
+                await prisma.producto.findFirst({
+
+                    skip: random
+
+                })
+
+            res.json(producto)
+
+        } catch (error: any) {
+
+            res.status(500).json({
+
+                error: error.message
+
+            })
+
+        }
+
+    }
+)
+
 export default router

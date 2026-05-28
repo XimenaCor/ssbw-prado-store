@@ -1,4 +1,5 @@
 node_modules
+react-spa/node_modules/
 .env
 /generated/prisma
 logs/*.log

@@ -4,11 +4,14 @@ import logger from "./logger.ts"
 import session from "express-session"
 import cookieParser from "cookie-parser"
 import jwt from "jsonwebtoken"
+import cors from "cors"
 import ApiRouter from "./routes/api.ts"
 import UsuariosRouter from "./routes/usuarios.ts"
 import ProductosRouter from "./routes/productos.ts"
 
 const app = express()
+
+app.use(cors())
 
 app.use(cookieParser())
 
