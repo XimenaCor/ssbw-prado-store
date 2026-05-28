@@ -1,18 +1,76 @@
-import Perritos from "./components/Perritos"
+import {
 
-import Cuadros from "./components/Cuadros"
+  BrowserRouter,
+
+  Routes,
+
+  Route,
+
+  Link
+
+} from "react-router-dom"
+
+import Home from "./pages/Home"
+
+import Gallery from "./pages/Gallery"
+
+import CarouselPage from "./pages/CarouselPage"
 
 function App() {
 
   return (
 
-    <div className="flex gap-2 items-center justify-center h-screen font-montserrat">
+    <BrowserRouter>
 
-      <Perritos />
+      <div className="min-h-screen">
 
-      <Cuadros />
+        <div className="tabs tabs-boxed flex justify-center mt-4">
 
-    </div>
+          <Link
+            to="/"
+            className="tab"
+          >
+            Inicio
+          </Link>
+
+          <Link
+            to="/gallery"
+            className="tab"
+          >
+            Tarea 9
+          </Link>
+
+          <Link
+            to="/carousel"
+            className="tab"
+          >
+            Carousel
+          </Link>
+
+        </div>
+
+        <Routes>
+
+          <Route
+            path="/"
+            element={<Home />}
+          />
+
+          <Route
+            path="/gallery"
+            element={<Gallery />}
+          />
+
+          <Route
+            path="/carousel"
+            element={<CarouselPage />}
+          />
+
+        </Routes>
+
+      </div>
+
+    </BrowserRouter>
 
   )
 
