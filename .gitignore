@@ -1,7 +1,9 @@
 node_modules
 react-spa/node_modules/
 astro-ssg/node_modules/
+astro-ssg/dist/
 .vscode/
 .env
 /generated/prisma
 logs/*.log
+.astro/

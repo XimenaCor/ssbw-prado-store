@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: always
+
+    environment:
+      POSTGRES_USER: yo
+      POSTGRES_PASSWORD: una_clave_muy_segura_123
+      POSTGRES_DB: ssbw
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  tienda-prado:
+    build: .
+
+    depends_on:
+      - db
+
+    restart: unless-stopped
+
+    ports:
+      - "3000:3000"
+
+  caddy:
+    image: caddy:alpine
+
+    depends_on:
+      - db
+      - tienda-prado
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - caddy-config:/config
+      - caddy-data:/data
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+
+volumes:
+  postgres_data:
+  caddy-config:
+  caddy-data:
