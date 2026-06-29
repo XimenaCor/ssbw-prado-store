@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CarrouselSSG from "../components/CarrouselSSG";
+import productos from "../../data/productos.json";
+---
+
+<Layout>
+
+    <div class="flex flex-col items-center justify-center min-h-screen gap-8">
+
+        <h1 class="text-4xl font-bold">
+            Galería SSG
+        </h1>
+
+        <CarrouselSSG
+            productos={productos}
+            client:load
+        />
+
+    </div>
+
+</Layout>

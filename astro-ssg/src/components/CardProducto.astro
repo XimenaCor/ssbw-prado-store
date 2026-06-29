@@ -1,0 +1,42 @@
+---
+interface Props {
+    titulo: string;
+    precio: string;
+    imagen: string;
+}
+
+const { titulo, precio, imagen } = Astro.props;
+---
+
+<a
+    href={`/productos/${encodeURIComponent(titulo)}`}
+    class="card bg-base-100 shadow-xl w-72 hover:shadow-2xl transition-shadow"
+>
+
+    <figure class="p-4">
+
+        <img
+            src="https://placehold.co/250x300?text=Libro"
+            alt={titulo}
+            class="rounded-lg"
+        />
+
+    </figure>
+
+    <div class="card-body">
+
+        <h2 class="card-title text-base">
+
+            {titulo}
+
+        </h2>
+
+        <p class="font-bold">
+
+            {precio}
+
+        </p>
+
+    </div>
+
+</a>

@@ -1,11 +1,35 @@
 ---
-import Layout from "../layouts/Layout.astro"
+import LayoutPrado from "../layouts/LayoutPrado.astro";
+import CardProducto from "../components/CardProducto.astro";
+import productos from "../../data/productos.json";
 
-import Welcome from "../components/Welcome.astro"
+const destacados = productos.slice(0, 12);
 ---
 
-<Layout>
+<LayoutPrado>
 
-  <Welcome />
+    <div class="flex flex-col items-center gap-8">
 
-</Layout>
+        <h1 class="text-4xl font-bold">
+
+            Destacados
+
+        </h1>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
+            {destacados.map((producto) => (
+
+                <CardProducto
+                    titulo={producto.titulo}
+                    precio={producto.precio}
+                    imagen={producto.imagen}
+                />
+
+            ))}
+
+        </section>
+
+    </div>
+
+</LayoutPrado>
